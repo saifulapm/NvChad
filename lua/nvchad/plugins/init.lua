@@ -56,9 +56,11 @@ return {
 
       -- custom nvchad cmd to install all mason binaries listed
       vim.api.nvim_create_user_command('MasonInstallAll', function()
-        for _, tool in ipairs(opts.ensure_installed) do
-          local p = require('mason-registry').get_package(tool)
-          if not p:is_installed() then p:install() end
+        if opts.ensure_installed and #opts.ensure_installed > 0 then
+          for _, tool in ipairs(opts.ensure_installed) do
+            local p = require('mason-registry').get_package(tool)
+            if not p:is_installed() then p:install() end
+          end
         end
       end, {})
 
